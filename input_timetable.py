@@ -267,3 +267,7 @@ class Timetable(Frame):
         self.total_minutes = self.minutes % 60
 
         self.total_day_hours.set(str(self.total_hours) + ":" + str(self.total_minutes))
+
+    def total_hours1(self):
+
+        return self.minutes / 60

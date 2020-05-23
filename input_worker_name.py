@@ -110,3 +110,7 @@ class WorkerName(Frame):
 			self.worker_name_label.config(background="#FA0000")
 
 		return True
+
+	def get_worker_code(self):
+
+		return self.worker_name.get()
