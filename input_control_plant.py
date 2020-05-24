@@ -3,6 +3,22 @@ from tkinter import *
 CELL_MARGIN = 7
 CELL_PADDING = 3
 
+# Códigos:
+
+code_3 = "3"
+code_8 = "8"
+code_9 = "9"
+code_15 = "15"
+code_18 = "18"
+code_19 = "19"
+code_20 = "20"
+code_21 = "21"
+code_22 = "22"
+code_23 = "23"
+code_24 = "24"
+code_6 = "6"
+code_29 = "29"
+
 class InputControlPlant(Frame):
 	def __init__(self, parent, rows_to_show):
 		Frame.__init__(self, parent, background="cyan")
@@ -149,7 +165,7 @@ class InputControlPlant(Frame):
 								sticky=W + E + N + S)
 
 	def __init_vertical_code_header(self):
-		prepare_raw_material_label = Label(self, text="3", anchor="center", relief="groove")
+		prepare_raw_material_label = Label(self, text=code_3, anchor="center", relief="groove")
 		prepare_raw_material_label.grid(row=1,
 										column=1,
 										padx=(0, CELL_PADDING),
@@ -486,42 +502,55 @@ class InputControlPlant(Frame):
 
 		self.hour_code_3 = self.__validate_if_entry_is_empty(self.__entries[0][3].cget("text"))
 		self.minute_code_3 = self.__validate_if_entry_is_empty(self.__entries[0][4].cget("text"))
+		self.decimal_hours_code_3 = self.__hours_and_minutes_to_decimal(self.hour_code_3, self.minute_code_3)
 
 		self.hour_code_8 = self.__validate_if_entry_is_empty(self.__entries[1][3].cget("text"))
 		self.minute_code_8 = self.__validate_if_entry_is_empty(self.__entries[1][4].cget("text"))
+		self.decimal_hours_code_8 = self.__hours_and_minutes_to_decimal(self.hour_code_8, self.minute_code_8)
 
 		self.hour_code_9 = self.__validate_if_entry_is_empty(self.__entries[2][3].cget("text"))
 		self.minute_code_9 = self.__validate_if_entry_is_empty(self.__entries[2][4].cget("text"))
+		self.decimal_hours_code_9 = self.__hours_and_minutes_to_decimal(self.hour_code_9, self.minute_code_9)
 
 		self.hour_code_15 = self.__validate_if_entry_is_empty(self.__entries[3][3].cget("text"))
 		self.minute_code_15 = self.__validate_if_entry_is_empty(self.__entries[3][4].cget("text"))
+		self.decimal_hours_code_15 = self.__hours_and_minutes_to_decimal(self.hour_code_15, self.minute_code_15)
 
 		self.hour_code_18 = self.__validate_if_entry_is_empty(self.__entries[4][3].cget("text"))
 		self.minute_code_18 = self.__validate_if_entry_is_empty(self.__entries[4][4].cget("text"))
+		self.decimal_hours_code_18 = self.__hours_and_minutes_to_decimal(self.hour_code_18, self.minute_code_18)
 
 		self.hour_code_19 = self.__validate_if_entry_is_empty(self.__entries[5][3].cget("text"))
 		self.minute_code_19 = self.__validate_if_entry_is_empty(self.__entries[5][4].cget("text"))
+		self.decimal_hours_code_19 = self.__hours_and_minutes_to_decimal(self.hour_code_19, self.minute_code_19)
 
 		self.hour_code_20 = self.__validate_if_entry_is_empty(self.__entries[6][3].cget("text"))
 		self.minute_code_20= self.__validate_if_entry_is_empty(self.__entries[6][4].cget("text"))
+		self.decimal_hours_code_20 = self.__hours_and_minutes_to_decimal(self.hour_code_20, self.minute_code_20)
 
 		self.hour_code_21 = self.__validate_if_entry_is_empty(self.__entries[7][3].cget("text"))
 		self.minute_code_21 = self.__validate_if_entry_is_empty(self.__entries[7][4].cget("text"))
+		self.decimal_hours_code_21 = self.__hours_and_minutes_to_decimal(self.hour_code_21, self.minute_code_21)
 
 		self.hour_code_22 = self.__validate_if_entry_is_empty(self.__entries[8][3].cget("text"))
 		self.minute_code_22 = self.__validate_if_entry_is_empty(self.__entries[8][4].cget("text"))
+		self.decimal_hours_code_22 = self.__hours_and_minutes_to_decimal(self.hour_code_22, self.minute_code_22)
 
 		self.hour_code_23 = self.__validate_if_entry_is_empty(self.__entries[9][3].cget("text"))
 		self.minute_code_23 = self.__validate_if_entry_is_empty(self.__entries[9][4].cget("text"))
+		self.decimal_hours_code_23 = self.__hours_and_minutes_to_decimal(self.hour_code_23, self.minute_code_23)
 
 		self.hour_code_24 = self.__validate_if_entry_is_empty(self.__entries[10][3].cget("text"))
 		self.minute_code_24 = self.__validate_if_entry_is_empty(self.__entries[10][4].cget("text"))
+		self.decimal_hours_code_24 = self.__hours_and_minutes_to_decimal(self.hour_code_24, self.minute_code_24)
 
 		self.hour_code_6 = self.__validate_if_entry_is_empty(self.__entries[11][3].cget("text"))
 		self.minute_code_6 = self.__validate_if_entry_is_empty(self.__entries[11][4].cget("text"))
+		self.decimal_hours_code_6 = self.__hours_and_minutes_to_decimal(self.hour_code_6, self.minute_code_6)
 
 		self.hour_code_29 = self.__validate_if_entry_is_empty(self.__entries[12][3].cget("text"))
 		self.minute_code_29 = self.__validate_if_entry_is_empty(self.__entries[12][4].cget("text"))
+		self.decimal_hours_code_29 = self.__hours_and_minutes_to_decimal(self.hour_code_29, self.minute_code_29)
 
 		self.total_hour = self.hour_code_3 +\
 						  self.hour_code_8 +\
@@ -564,14 +593,6 @@ class InputControlPlant(Frame):
 
 		return True
 
-	def hours_and_minutes_to_decimal(self):
-
-		self.hours, self.minutes = self.__return_hour_and_minutes()
-
-		self.decimal_hours = int(self.hours) + float(self.minutes/60)
-
-		return self.decimal_hours
-
 	def __validate_if_entry_is_empty(self, entry):
 
 		if entry == "":
@@ -580,3 +601,21 @@ class InputControlPlant(Frame):
 			final_date = int(entry)
 
 		return final_date
+
+	def hours_and_minutes_to_decimal(self):
+
+		self.hours, self.minutes = self.__return_hour_and_minutes()
+
+		self.decimal_hours = int(self.hours) + float(self.minutes/60)
+
+		return self.decimal_hours
+
+	def __hours_and_minutes_to_decimal(self, hours, minutes):
+
+		self.decimal_hours = int(hours) + int(minutes) / 60
+
+		return self.decimal_hours
+
+	def return_hours_from_code(self):
+
+		return code_3
