@@ -1,9 +1,7 @@
-from tkcalendar import Calendar, DateEntry
-import tkinter as tk
+from tkcalendar import DateEntry
 from tkinter import *
-from tkinter import ttk
 import datetime
-from datetime import datetime, date, time, timedelta
+from datetime import datetime
 
 CELL_MARGIN = 7
 CELL_PADDING = 3
@@ -13,7 +11,7 @@ class Calendar(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent, background="red")
 
-        self.day_name = StringVar()
+        self.day_number = StringVar()
 
         self.__calendar()
 
@@ -49,6 +47,7 @@ class Calendar(Frame):
                                  ipadx=CELL_MARGIN,
                                  ipady=CELL_MARGIN,
                                  sticky=W + E + N + S)
+        self.calendar_entry.bind("<<DateEntrySelected>>", self.__print_name_day)
 
         self.calendar_title_label = Label(self,
                                           text="Día",
@@ -65,7 +64,7 @@ class Calendar(Frame):
 
         self.calendar_entry = Label(self,
                                     anchor="center",
-                                    textvariable=self.day_name)
+                                    textvariable=self.day_number)
         self.calendar_entry.grid(row=1,
                                  column=1,
                                  padx=(0, CELL_PADDING),
@@ -74,19 +73,12 @@ class Calendar(Frame):
                                  ipady=CELL_MARGIN,
                                  sticky=W + E + N + S)
 
-        self.name_day_button = Button(self,
-                                      text="Registrar",
-                                      relief="groove",
-                                      anchor="center",
-                                      command=self.__print_name_day)
-        self.name_day_button.grid(row=2,
-                                  column=0,
-                                  columnspan=2,
-                                  padx=(0, CELL_PADDING),
-                                  pady=CELL_PADDING,
-                                  ipadx=CELL_MARGIN,
-                                  ipady=CELL_MARGIN,
-                                  sticky=W + E + N + S)
+    def __print_name_day(self, event):
+        w = event.widget
+        date = w.get_date()
+        date_with_format = date.strftime("%d/%m/%Y")
+        self.day_number.set(date_with_format)
 
-    def __print_name_day(self):
-        self.day_name.set(self.calendar_entry.get_date())
+    def return_date(self):
+
+        return str(self.day_number.get())

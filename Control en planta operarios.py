@@ -1,17 +1,5 @@
-import datetime
 import tkinter as tk
-from csv import reader
-from datetime import datetime
-from tkinter import *
 from tkinter import messagebox
-
-import pandas as pd
-import tk_tools
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.figure import Figure
-from matplotlib import pyplot as plt
-from matplotlib import style
-import matplotlib.animation as animation
 
 from input_control_plant import *
 
@@ -22,13 +10,14 @@ from input_calendar import Calendar
 
 REGISTRY_FILE_NAME = "Registro.csv"
 
-def validate_register_dates(hours_control_plant, hours_timetable, worker_name):
+def validate_register_dates(hours_control_plant, hours_timetable, worker_name, input_date):
     # La función va a devolver la variable de verificación, y en función de su valor, luego se registrará en el archivo o no.
     # Debe ser "True" para que pueda registrar
     verification_variable_control_plant = True
     verification_variable_control_plant_hours_timetable = True
     verification_variable_worker_code = True
     verification_variable_hours_control_plant = True
+    verification_variable_date = True
 
     # En principio la validación de la fecha no sé si va a ser necesaria...
 
@@ -51,6 +40,12 @@ def validate_register_dates(hours_control_plant, hours_timetable, worker_name):
                              message="El código del trabajador introducido es erróneo")
         verification_variable_worker_code = False
 
+    # Validación de la fecha
+    if len(input_date) != 10:
+        messagebox.showerror(title="Error en la fecha",
+                             message="No se ha seleccionado ninguna fecha")
+        verification_variable_date = False
+
     # Validación de que las horas del control en planta y el horario sean iguales:
     if len(str(hours_control_plant)) != 0 and len(str(hours_timetable)) != 0:
         if hours_control_plant != hours_timetable:
@@ -61,7 +56,8 @@ def validate_register_dates(hours_control_plant, hours_timetable, worker_name):
     return verification_variable_control_plant, \
            verification_variable_control_plant_hours_timetable, \
            verification_variable_worker_code, \
-           verification_variable_hours_control_plant
+           verification_variable_hours_control_plant, \
+           verification_variable_date
 
 
 def register():
@@ -69,17 +65,16 @@ def register():
     worker_name = workername.get_worker_code()
     hours_timetable = timetable.return_total_hours_to_register()
 
-    input_date = "Falta ponerlo"
+    input_date = calendar.return_date()
 
     # Vamos a poner las validaciones.
-    verif_1, verif_2, verif_3, verif_4 = validate_register_dates(hours_control_plant, hours_timetable, worker_name)
-    if verif_1 == True and verif_2 == True and verif_3 == True and verif_4 == True:
+    verif_1, verif_2, verif_3, verif_4, verif_5 = validate_register_dates(hours_control_plant, hours_timetable, worker_name, input_date)
+    if verif_1 == True and verif_2 == True and verif_3 == True and verif_4 == True and verif_5 == True:
         # Poner la función para registrar en el .csv
         print("OK")
         register_input(input_date, worker_name)
     else:
         print("NOK")
-
 
 def generate_input_to_register(date, worker_name):
     date = str(date)

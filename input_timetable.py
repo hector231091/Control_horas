@@ -268,7 +268,6 @@ class Timetable(Frame):
 
 		self.total_day_hours.set(str(self.total_hours) + ":" + str(self.total_minutes))
 
-
 	def return_total_hours_to_register(self):
 
 		return self.minutes / 60
