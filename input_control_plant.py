@@ -1,10 +1,13 @@
 from tkinter import *
+from csv import reader
+from tkinter import ttk
 
+# Constantes
+OTHER_OPERATIONS = "Otras_operaciones.csv"
 CELL_MARGIN = 7
 CELL_PADDING = 3
 
 # Códigos:
-
 code_3 = "3"
 code_8 = "8"
 code_9 = "9"
@@ -25,6 +28,7 @@ class InputControlPlant(Frame):
 
 		self.total_sum_hours = StringVar()
 		self.total_sum_minutes = StringVar()
+		self.selected_operation_code = StringVar()
 
 		self.rows_to_show = rows_to_show
 
@@ -33,6 +37,7 @@ class InputControlPlant(Frame):
 		self.__init_vertical_code_header()
 		self.__create_sum_button()
 		self.__create_empty_total_hours_and_minutes_label()
+		self.__load_other_operations()
 
 		self.__entries = []
 		self.__init_empty_skeleton(self.__entries)
@@ -155,14 +160,18 @@ class InputControlPlant(Frame):
 									  ipady=CELL_MARGIN,
 									  sticky=W + E + N + S)
 
-		check_button_label = Label(self, text="ELEGIR DE UN DESPLEGABLE", anchor="w", relief="groove")
-		check_button_label.grid(row=14,
-								column=0,
-								padx=(0, CELL_PADDING),
-								pady=CELL_PADDING,
-								ipadx=CELL_MARGIN,
-								ipady=CELL_MARGIN,
-								sticky=W + E + N + S)
+		self.check_button_label_1 = ttk.Combobox(self,
+												 values=self.__load_other_operations()[0],
+												 width=10,
+												 validate="key",
+												 validatecommand=(self.register(self.__validate_operations_code), "%P"))
+		self.check_button_label_1.grid(row=14,
+									   column=0,
+									   padx=(0, CELL_PADDING),
+									   pady=CELL_PADDING,
+									   ipadx=CELL_MARGIN,
+									   ipady=CELL_MARGIN,
+									   sticky=W + E + N + S)
 
 	def __init_vertical_code_header(self):
 		prepare_raw_material_label = Label(self, text=code_3, anchor="center", relief="groove")
@@ -282,8 +291,8 @@ class InputControlPlant(Frame):
 									  ipady=CELL_MARGIN,
 									  sticky=W + E + N + S)
 
-		check_button_label = Label(self, text="¿?", anchor="center", relief="groove")
-		check_button_label.grid(row=14,
+		check_button_label_2 = Label(self, textvariable=self.selected_operation_code, anchor="center", relief="groove")
+		check_button_label_2.grid(row=14,
 								column=1,
 								padx=(0, CELL_PADDING),
 								pady=CELL_PADDING,
@@ -414,7 +423,7 @@ class InputControlPlant(Frame):
 		row.append(column4)
 
 	def __create_sum_button(self):
-		sum_button = Button(self, text="SUMAR", anchor="center", relief="groove", command=self.sum_codes)
+		sum_button = Button(self, text="SUMAR", anchor="center", command=self.sum_codes)
 		sum_button.grid(row=self.rows_to_show+1,
 						column=0,
 						padx=(0, CELL_PADDING),
@@ -437,6 +446,32 @@ class InputControlPlant(Frame):
 					 background="white",
 					 relief="groove",
 					 justify="center")
+
+	def __load_other_operations(self):
+		with open(OTHER_OPERATIONS, "r") as operations:
+			lines = reader(operations)
+			header = next(lines)
+
+			operation_code_list = []
+			operation_name_list = []
+
+			for line in operations:
+				# Realmente lo suyo sería que leyera hasta el primer ";", ya que el código de la operación puede ser de 1, 2 ó 3 dígitos. Arreglar en un futuro.
+				operation_code_list.append(line[:2])
+				operation_name_list.append(line[3:-1])
+
+		operation_code_and_name = dict(zip(operation_code_list, operation_name_list))
+
+		return operation_name_list, operation_code_and_name
+
+	# Revisar porque no funciona. Tiene que hacer lo mismo que hace desde la línea 510 a la 515.
+	def __validate_operations_code(self, input_text):
+
+		self.check_button_label_1.get()
+
+		self.selected_operation_code.set("HOLA")
+
+		return True
 
 	def sum_codes(self):
 
@@ -471,6 +506,14 @@ class InputControlPlant(Frame):
 
 		self.total_sum_hours.set(total_minutes // 60)
 		self.total_sum_minutes.set(total_minutes % 60)
+
+		diccionario = self.__load_other_operations()[1]
+
+		key_list = list(diccionario.keys())
+		val_list = list(diccionario.values())
+
+		self.selected_operation_code.set(key_list[val_list.index(self.check_button_label_1.get())])
+
 
 	def __create_empty_total_hours_and_minutes_label(self):
 

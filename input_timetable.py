@@ -1,6 +1,4 @@
-import tkinter as tk
 import datetime
-import time
 
 from csv import reader
 from tkinter import *

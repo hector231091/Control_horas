@@ -2,8 +2,8 @@
 from csv import reader
 from tkinter import *
 
+# Constantes
 WORKERS_FILE_NAME = "Operarios.csv"
-
 CELL_MARGIN = 7
 CELL_PADDING = 3
 
@@ -42,9 +42,9 @@ class WorkerName(Frame):
 									sticky=W + E + N + S)
 
 		self.worker_name_title_label = Label(self,
-									   text="Nombre de operario",
-									   anchor="center",
-									   relief="groove")
+											 text="Nombre de operario",
+											 anchor="center",
+											 relief="groove")
 		self.worker_name_title_label.grid(row=0,
 									column=1,
 									padx=(0, CELL_PADDING),

@@ -8,7 +8,7 @@ from input_worker_name import WorkerName
 from input_timetable import Timetable
 from input_calendar import Calendar
 
-REGISTRY_FILE_NAME = "Registro.csv"
+REGISTRY_FILE_NAME = "Registro_horas.csv"
 
 # La función va a devolver la variable de verificación, y en función de su valor, luego se registrará en el archivo o no.
 # Las variables deben ser "True" para que pueda registrar
