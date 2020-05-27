@@ -14,8 +14,9 @@ CELL_PADDING = 2
 
 class Timetable(Frame):
 	def __init__(self, parent):
-		Frame.__init__(self, parent, background="green")
-
+		Frame.__init__(self, parent, highlightbackground="black", highlightcolor="black", highlightthickness=2)
+		# Inicializo la variable self.minutes a 0 para que no de problemas cuando van a registrar.
+		self.minutes = 0
 		self.total_day_hours = StringVar()
 		self.first_sum = StringVar()
 		self.second_sum = StringVar()
@@ -169,7 +170,7 @@ class Timetable(Frame):
 
 		self.sum_hour_1 = Label(self,
 								textvariable=self.first_sum,
-								relief="sunken")
+								relief="groove")
 		self.sum_hour_1.grid(row=1,
 							column=2,
 							padx=(0, CELL_PADDING),
@@ -180,7 +181,7 @@ class Timetable(Frame):
 
 		self.sum_hour_2 = Label(self,
 								textvariable=self.second_sum,
-								relief="sunken")
+								relief="groove")
 		self.sum_hour_2.grid(row=2,
 							column=2,
 							padx=(0, CELL_PADDING),
@@ -191,7 +192,7 @@ class Timetable(Frame):
 
 		self.sum_hour_3 = Label(self,
 								textvariable=self.third_sum,
-								relief="sunken")
+								relief="groove")
 		self.sum_hour_3.grid(row=3,
 							column=2,
 							padx=(0, CELL_PADDING),
@@ -203,7 +204,7 @@ class Timetable(Frame):
 	def __total_hour_button(self):
 
 		self.total_hour = Button(self,
-								 text="Sumar horas",
+								 text="SUMAR HORAS",
 								 command=self.__sum_hours)
 
 		self.total_hour.grid(row=4,
@@ -219,7 +220,7 @@ class Timetable(Frame):
 
 		self.total_hour = Label(self,
 								textvariable=self.total_day_hours,
-								relief="sunken")
+								relief="groove")
 		self.total_hour.grid(row=1,
 							column=3,
 							rowspan=3,
@@ -270,4 +271,25 @@ class Timetable(Frame):
 
 	def return_total_hours_to_register(self):
 
-		return self.minutes / 60
+		if self.minutes == 0:
+			variable_return = 0
+		else:
+			variable_return = self.minutes / 60
+
+		return variable_return
+
+	def clear(self):
+		self.total_day_hours.set("")
+		self.minutes = 0
+		self.from_hour_1.delete(0, "end")
+		self.until_hour_1.delete(0, "end")
+		self.from_hour_2.delete(0, "end")
+		self.until_hour_2.delete(0, "end")
+		self.from_hour_3.delete(0, "end")
+		self.until_hour_3.delete(0, "end")
+		self.first_sum.set("")
+		self.second_sum.set("")
+		self.third_sum.set("")
+
+
+

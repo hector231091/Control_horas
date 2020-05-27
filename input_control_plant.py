@@ -21,7 +21,7 @@ code_29 = "29"
 
 class InputControlPlant(Frame):
 	def __init__(self, parent, rows_to_show):
-		Frame.__init__(self, parent, background="cyan")
+		Frame.__init__(self, parent, highlightbackground="black", highlightcolor="black", highlightthickness=2)
 
 		self.total_sum_hours = StringVar()
 		self.total_sum_minutes = StringVar()
@@ -502,55 +502,55 @@ class InputControlPlant(Frame):
 
 		self.hour_code_3 = self.__validate_if_entry_is_empty(self.__entries[0][3].cget("text"))
 		self.minute_code_3 = self.__validate_if_entry_is_empty(self.__entries[0][4].cget("text"))
-		self.decimal_hours_code_3 = self.__hours_and_minutes_to_decimal(self.hour_code_3, self.minute_code_3)
+		self.decimal_hours_code_3 = str(self.__hours_and_minutes_to_decimal(self.hour_code_3, self.minute_code_3)).replace('.', ',')
 
 		self.hour_code_8 = self.__validate_if_entry_is_empty(self.__entries[1][3].cget("text"))
 		self.minute_code_8 = self.__validate_if_entry_is_empty(self.__entries[1][4].cget("text"))
-		self.decimal_hours_code_8 = self.__hours_and_minutes_to_decimal(self.hour_code_8, self.minute_code_8)
+		self.decimal_hours_code_8 = str(self.__hours_and_minutes_to_decimal(self.hour_code_8, self.minute_code_8)).replace('.', ',')
 
 		self.hour_code_9 = self.__validate_if_entry_is_empty(self.__entries[2][3].cget("text"))
 		self.minute_code_9 = self.__validate_if_entry_is_empty(self.__entries[2][4].cget("text"))
-		self.decimal_hours_code_9 = self.__hours_and_minutes_to_decimal(self.hour_code_9, self.minute_code_9)
+		self.decimal_hours_code_9 = str(self.__hours_and_minutes_to_decimal(self.hour_code_9, self.minute_code_9)).replace('.', ',')
 
 		self.hour_code_15 = self.__validate_if_entry_is_empty(self.__entries[3][3].cget("text"))
 		self.minute_code_15 = self.__validate_if_entry_is_empty(self.__entries[3][4].cget("text"))
-		self.decimal_hours_code_15 = self.__hours_and_minutes_to_decimal(self.hour_code_15, self.minute_code_15)
+		self.decimal_hours_code_15 = str(self.__hours_and_minutes_to_decimal(self.hour_code_15, self.minute_code_15)).replace('.', ',')
 
 		self.hour_code_18 = self.__validate_if_entry_is_empty(self.__entries[4][3].cget("text"))
 		self.minute_code_18 = self.__validate_if_entry_is_empty(self.__entries[4][4].cget("text"))
-		self.decimal_hours_code_18 = self.__hours_and_minutes_to_decimal(self.hour_code_18, self.minute_code_18)
+		self.decimal_hours_code_18 = str(self.__hours_and_minutes_to_decimal(self.hour_code_18, self.minute_code_18)).replace('.', ',')
 
 		self.hour_code_19 = self.__validate_if_entry_is_empty(self.__entries[5][3].cget("text"))
 		self.minute_code_19 = self.__validate_if_entry_is_empty(self.__entries[5][4].cget("text"))
-		self.decimal_hours_code_19 = self.__hours_and_minutes_to_decimal(self.hour_code_19, self.minute_code_19)
+		self.decimal_hours_code_19 = str(self.__hours_and_minutes_to_decimal(self.hour_code_19, self.minute_code_19)).replace('.', ',')
 
 		self.hour_code_20 = self.__validate_if_entry_is_empty(self.__entries[6][3].cget("text"))
 		self.minute_code_20= self.__validate_if_entry_is_empty(self.__entries[6][4].cget("text"))
-		self.decimal_hours_code_20 = self.__hours_and_minutes_to_decimal(self.hour_code_20, self.minute_code_20)
+		self.decimal_hours_code_20 = str(self.__hours_and_minutes_to_decimal(self.hour_code_20, self.minute_code_20)).replace('.', ',')
 
 		self.hour_code_21 = self.__validate_if_entry_is_empty(self.__entries[7][3].cget("text"))
 		self.minute_code_21 = self.__validate_if_entry_is_empty(self.__entries[7][4].cget("text"))
-		self.decimal_hours_code_21 = self.__hours_and_minutes_to_decimal(self.hour_code_21, self.minute_code_21)
+		self.decimal_hours_code_21 = str(self.__hours_and_minutes_to_decimal(self.hour_code_21, self.minute_code_21)).replace('.', ',')
 
 		self.hour_code_22 = self.__validate_if_entry_is_empty(self.__entries[8][3].cget("text"))
 		self.minute_code_22 = self.__validate_if_entry_is_empty(self.__entries[8][4].cget("text"))
-		self.decimal_hours_code_22 = self.__hours_and_minutes_to_decimal(self.hour_code_22, self.minute_code_22)
+		self.decimal_hours_code_22 = str(self.__hours_and_minutes_to_decimal(self.hour_code_22, self.minute_code_22)).replace('.', ',')
 
 		self.hour_code_23 = self.__validate_if_entry_is_empty(self.__entries[9][3].cget("text"))
 		self.minute_code_23 = self.__validate_if_entry_is_empty(self.__entries[9][4].cget("text"))
-		self.decimal_hours_code_23 = self.__hours_and_minutes_to_decimal(self.hour_code_23, self.minute_code_23)
+		self.decimal_hours_code_23 = str(self.__hours_and_minutes_to_decimal(self.hour_code_23, self.minute_code_23)).replace('.', ',')
 
 		self.hour_code_24 = self.__validate_if_entry_is_empty(self.__entries[10][3].cget("text"))
 		self.minute_code_24 = self.__validate_if_entry_is_empty(self.__entries[10][4].cget("text"))
-		self.decimal_hours_code_24 = self.__hours_and_minutes_to_decimal(self.hour_code_24, self.minute_code_24)
+		self.decimal_hours_code_24 = str(self.__hours_and_minutes_to_decimal(self.hour_code_24, self.minute_code_24)).replace('.', ',')
 
 		self.hour_code_6 = self.__validate_if_entry_is_empty(self.__entries[11][3].cget("text"))
 		self.minute_code_6 = self.__validate_if_entry_is_empty(self.__entries[11][4].cget("text"))
-		self.decimal_hours_code_6 = self.__hours_and_minutes_to_decimal(self.hour_code_6, self.minute_code_6)
+		self.decimal_hours_code_6 = str(self.__hours_and_minutes_to_decimal(self.hour_code_6, self.minute_code_6)).replace('.', ',')
 
 		self.hour_code_29 = self.__validate_if_entry_is_empty(self.__entries[12][3].cget("text"))
 		self.minute_code_29 = self.__validate_if_entry_is_empty(self.__entries[12][4].cget("text"))
-		self.decimal_hours_code_29 = self.__hours_and_minutes_to_decimal(self.hour_code_29, self.minute_code_29)
+		self.decimal_hours_code_29 = str(self.__hours_and_minutes_to_decimal(self.hour_code_29, self.minute_code_29)).replace('.', ',')
 
 		self.total_hour = self.hour_code_3 +\
 						  self.hour_code_8 +\
@@ -616,6 +616,21 @@ class InputControlPlant(Frame):
 
 		return self.decimal_hours
 
-	def return_hours_from_code(self):
+	def clear(self):
+		# Limpiamos todos los "entries" de la matriz
+		for i in range(self.rows_to_show):
+			row = i
+			for j in range (3):
+				column = j
+				self.__entries[row][column].delete(0, "end")
 
-		return code_3
+		# Limpiamos las sumas de horas y minutos de cada operación.
+		for i in range(self.rows_to_show):
+			row = i
+			for j in range (3,5):
+				column = j
+				self.__entries[row][column].configure(text="")
+
+		# Limpiamos los valores finales de suma
+		self.total_sum_hours.set("")
+		self.total_sum_minutes.set("")

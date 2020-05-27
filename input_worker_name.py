@@ -13,7 +13,7 @@ CELL_PADDING = 3
 
 class WorkerName(Frame):
 	def __init__(self, parent):
-		Frame.__init__(self, parent, background="yellow")
+		Frame.__init__(self, parent, highlightbackground="black", highlightcolor="black", highlightthickness=2)
 
 		self.worker_name = StringVar()
 
@@ -113,4 +113,10 @@ class WorkerName(Frame):
 
 	def get_worker_code(self):
 
-		return self.worker_name.get()
+		return self.worker_code_entry.get()
+
+	def clear(self):
+		self.worker_code_entry.delete(0, "end")
+		self.worker_name.set("")
+		self.worker_name_label.config(background = "#F8B527")
+
