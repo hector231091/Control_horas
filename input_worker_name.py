@@ -1,10 +1,6 @@
-import tkinter as tk
+
 from csv import reader
 from tkinter import *
-
-import validator
-from tester_leds import TesterLeds
-from data import ValidationType
 
 WORKERS_FILE_NAME = "Operarios.csv"
 
