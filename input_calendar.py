@@ -78,8 +78,10 @@ class Calendar(Frame):
         w = event.widget
         date = w.get_date()
         locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
-        date_with_format = date.strftime("%A, %-d de %B de %Y")
+        date_with_format = date.strftime("%A, %d de %B de %Y")
+        #date_with_format = date.strftime("%A, %-d de %B de %Y")
         self.day_number.set(date_with_format)
 
     def return_date(self):
+        # Poner alguna condición para que no le devuelva esto si no hay nada en el campo del formato de la fecha.
         return str(self.calendar_date_entry.get_date())
