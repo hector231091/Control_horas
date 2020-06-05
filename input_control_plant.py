@@ -1,6 +1,7 @@
 from tkinter import *
-from csv import reader
 from tkinter import ttk
+
+import pandas as pd
 
 # Constantes
 OTHER_OPERATIONS = "Otras_operaciones.csv"
@@ -160,8 +161,14 @@ class InputControlPlant(Frame):
 									  ipady=CELL_MARGIN,
 									  sticky=W + E + N + S)
 
-		self.check_button_label_1 = Label(self, textvariable=self.selected_operation_code, anchor="w", relief="groove")
-		self.check_button_label_1.grid(row=14,
+
+		self.check_button_entry_1 = ttk.Combobox(self,
+												 justify="left",
+												 values=self.__load_other_operations()[0],
+												 width=10,
+												 validate="key",
+												 validatecommand=(self.register(self.__validate_operations_code), "%P"))
+		self.check_button_entry_1.grid(row=14,
 									   column=0,
 									   padx=(0, CELL_PADDING),
 									   pady=CELL_PADDING,
@@ -287,22 +294,17 @@ class InputControlPlant(Frame):
 									  ipady=CELL_MARGIN,
 									  sticky=W + E + N + S)
 
-		self.check_button_entry_1 = ttk.Combobox(self,
-												 justify="center",
-												 values=self.__load_other_operations()[2],
-												 width=10,
-												 validate="key",
-												 validatecommand=(self.register(self.__validate_operations_code), "%P"))
-		self.check_button_entry_1.grid(row=14,
+		self.check_button_label_1 = Label(self,
+										  textvariable=self.selected_operation_code,
+										  anchor="w",
+										  relief="groove")
+		self.check_button_label_1.grid(row=14,
 									   column=1,
 									   padx=(0, CELL_PADDING),
 									   pady=CELL_PADDING,
 									   ipadx=CELL_MARGIN,
 									   ipady=CELL_MARGIN,
 									   sticky=W + E + N + S)
-
-		# Por aquí van los tiros para la validación.
-		# self.check_button_entry_1.bind("<<ComboboxSelected>>", print("Selected!"))
 
 	def __init_horizontal_header(self):
 		operation_name = Label(self, text="NOMBRE DE LA OPERACIÓN", anchor="center", relief="groove")
@@ -452,28 +454,30 @@ class InputControlPlant(Frame):
 					 justify="center")
 
 	def __load_other_operations(self):
-		with open(OTHER_OPERATIONS, "r") as operations:
-			lines = reader(operations)
-			header = next(lines)
 
-			operation_code_list = []
-			operation_name_list = []
+		operations_file = pd.read_csv(OTHER_OPERATIONS, ";", header=None, na_filter=False)
 
-			for line in operations:
-				# Realmente lo suyo sería que leyera hasta el primer ";", ya que el código de la operación puede ser de 1, 2 ó 3 dígitos. Arreglar en un futuro.
-				operation_code_list.append(line[:2])
-				operation_name_list.append(line[3:-1])
+		self.list_of_operation_names = []
+		self.operations = {}
 
-		operation_code_and_name = dict(zip(operation_code_list, operation_name_list))
+		for i in range(2, len(operations_file)):
+			self.name = operations_file[0][i]
+			self.code = operations_file[1][i]
 
-		return operation_name_list, operation_code_and_name, operation_code_list
+			self.list_of_operation_names.append(self.name)
+			self.operations[self.name] = self.code
+
+		return self.list_of_operation_names, self.operations
 
 	# Revisar porque no funciona. Tiene que hacer lo mismo que hace desde la línea 510 a la 515.
 	def __validate_operations_code(self, input_text):
 
-		self.check_button_label_1.get()
+		# Por aquí van los tiros para la validación.
+		self.check_button_entry_1.bind("<<ComboboxSelected>>", print("Selected!"))
 
-		self.selected_operation_code.set("HOLA")
+		self.name_code_operations = self.__load_other_operations()[1]
+
+		self.selected_operation_code.set(self.name_code_operations.get(self.check_button_entry_1.get()))
 
 		return True
 
@@ -510,10 +514,6 @@ class InputControlPlant(Frame):
 
 		self.total_sum_hours.set(total_minutes // 60)
 		self.total_sum_minutes.set(total_minutes % 60)
-
-		self.code_name_operations = self.__load_other_operations()[1]
-
-		self.selected_operation_code.set(self.code_name_operations.get(self.check_button_entry_1.get()))
 
 	def __create_empty_total_hours_and_minutes_label(self):
 
