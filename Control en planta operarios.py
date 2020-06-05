@@ -104,7 +104,8 @@ def generate_input_to_register(date, worker_name):
            date + ";" + worker_name + ";" + code_22 + ";" + str(control_plant.decimal_hours_code_22) + "\n" + \
            date + ";" + worker_name + ";" + code_23 + ";" + str(control_plant.decimal_hours_code_23) + "\n" + \
            date + ";" + worker_name + ";" + code_24 + ";" + str(control_plant.decimal_hours_code_24) + "\n" + \
-		   date + ";" + worker_name + ";" + code_29 + ";" + str(control_plant.decimal_hours_code_29) + "\n"
+           date + ";" + worker_name + ";" + code_6 + ";" + str(control_plant.decimal_hours_code_6) + "\n" + \
+           date + ";" + worker_name + ";" + code_29 + ";" + str(control_plant.decimal_hours_code_29) + "\n"
 
 # Esta función registra los datos introducidos por el usuario.
 def register_input(date, worker_name):
@@ -130,7 +131,7 @@ root.state("zoomed")
 
 control_plant = InputControlPlant(root, AMOUNT_OF_ROWS)
 control_plant.pack(fill="both")
-control_plant.place(relx=0.37, rely=0, relwidth=0.62, relheigh=0.95)
+control_plant.place(relx=0.33, rely=0, relwidth=0.67, relheigh=0.95)
 
 calendar = Calendar(root)
 calendar.pack(fill="both")
@@ -145,6 +146,6 @@ workername.pack(fill="both")
 workername.place(relx=0.01, rely=0, relwidth=0.3, relheigh=0.12)
 
 total = Button(root, text="Registrar", command=register)
-total.place(relx=0.9, rely=0.9, relwidth=0.1, relheigh=0.1)
+total.place(relx=0.1, rely=0.9, relwidth=0.1, relheigh=0.1)
 
 root.mainloop()

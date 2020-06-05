@@ -160,11 +160,7 @@ class InputControlPlant(Frame):
 									  ipady=CELL_MARGIN,
 									  sticky=W + E + N + S)
 
-		self.check_button_label_1 = ttk.Combobox(self,
-												 values=self.__load_other_operations()[0],
-												 width=10,
-												 validate="key",
-												 validatecommand=(self.register(self.__validate_operations_code), "%P"))
+		self.check_button_label_1 = Label(self, textvariable=self.selected_operation_code, anchor="w", relief="groove")
 		self.check_button_label_1.grid(row=14,
 									   column=0,
 									   padx=(0, CELL_PADDING),
@@ -291,15 +287,23 @@ class InputControlPlant(Frame):
 									  ipady=CELL_MARGIN,
 									  sticky=W + E + N + S)
 
-		check_button_label_2 = Label(self, textvariable=self.selected_operation_code, anchor="center", relief="groove")
-		check_button_label_2.grid(row=14,
-								column=1,
-								padx=(0, CELL_PADDING),
-								pady=CELL_PADDING,
-								ipadx=CELL_MARGIN,
-								ipady=CELL_MARGIN,
-								sticky=W + E + N + S)
-	
+		self.check_button_entry_1 = ttk.Combobox(self,
+												 justify="center",
+												 values=self.__load_other_operations()[2],
+												 width=10,
+												 validate="key",
+												 validatecommand=(self.register(self.__validate_operations_code), "%P"))
+		self.check_button_entry_1.grid(row=14,
+									   column=1,
+									   padx=(0, CELL_PADDING),
+									   pady=CELL_PADDING,
+									   ipadx=CELL_MARGIN,
+									   ipady=CELL_MARGIN,
+									   sticky=W + E + N + S)
+
+		# Por aquí van los tiros para la validación.
+		# self.check_button_entry_1.bind("<<ComboboxSelected>>", print("Selected!"))
+
 	def __init_horizontal_header(self):
 		operation_name = Label(self, text="NOMBRE DE LA OPERACIÓN", anchor="center", relief="groove")
 		operation_name.grid(row=0,
@@ -462,7 +466,7 @@ class InputControlPlant(Frame):
 
 		operation_code_and_name = dict(zip(operation_code_list, operation_name_list))
 
-		return operation_name_list, operation_code_and_name
+		return operation_name_list, operation_code_and_name, operation_code_list
 
 	# Revisar porque no funciona. Tiene que hacer lo mismo que hace desde la línea 510 a la 515.
 	def __validate_operations_code(self, input_text):
@@ -507,13 +511,9 @@ class InputControlPlant(Frame):
 		self.total_sum_hours.set(total_minutes // 60)
 		self.total_sum_minutes.set(total_minutes % 60)
 
-		diccionario = self.__load_other_operations()[1]
+		self.code_name_operations = self.__load_other_operations()[1]
 
-		key_list = list(diccionario.keys())
-		val_list = list(diccionario.values())
-
-		self.selected_operation_code.set(key_list[val_list.index(self.check_button_label_1.get())])
-
+		self.selected_operation_code.set(self.code_name_operations.get(self.check_button_entry_1.get()))
 
 	def __create_empty_total_hours_and_minutes_label(self):
 
