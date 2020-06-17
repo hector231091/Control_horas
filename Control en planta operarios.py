@@ -5,7 +5,8 @@ from input_control_plant import *
 
 from input_control_plant import InputControlPlant
 from input_worker_name import WorkerName
-from input_timetable import Timetable
+#from input_timetable import Timetable
+from input_total_day_hours import Timetable
 from input_calendar import Calendar
 
 REGISTRY_FILE_NAME = "Registro_horas.csv"
@@ -79,7 +80,7 @@ def verification_True_of_variables(var_1, var_2, var_3, var_4, var_5):
 def register():
     hours_control_plant = control_plant.hours_and_minutes_to_decimal()
     worker_name = workername.get_worker_code()
-    hours_timetable = timetable.return_total_hours_to_register()
+    hours_timetable = timetable.return_hours()
 
     input_date = calendar.return_date()
 
@@ -88,7 +89,6 @@ def register():
     if validate_register_dates(hours_control_plant, hours_timetable, worker_name, input_date) == True:
         register_input(input_date, worker_name)
         clear()
-
 
 def generate_input_to_register(date, worker_name):
     date = str(date)
@@ -139,7 +139,7 @@ calendar.place(relx=0.01, rely=0.15, relwidth=0.31, relheigh=0.25)
 
 timetable = Timetable(root)
 timetable.pack(fill="both")
-timetable.place(relx=0.01, rely=0.45, relwidth=0.27, relheigh=0.33)
+timetable.place(relx=0.01, rely=0.45, relwidth=0.31, relheigh=0.4)
 
 workername = WorkerName(root)
 workername.pack(fill="both")
